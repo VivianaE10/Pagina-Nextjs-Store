@@ -1,22 +1,6 @@
 import Image from "next/image";
 import styles from "./MainProducts.module.sass";
-
-const getProducts = async () => {
-  try {
-    const response = await fetch(
-      `${process.env.SHOPIFY_HOSTNAME}/admin/api/2023-10/products.json`, //process.env.SHOPIFY_API_KEY: es la variable de entorno que debería contener tu token de acceso
-      {
-        headers: new Headers({
-          "X-Shopify-Access-Token": process.env.SHOPIFY_API_KEY || "", // Usamos un valor por defecto (fallback) para evitar errores si la variable está vacía
-        }),
-      }
-    );
-    const { products } = await response.json();
-    return products;
-  } catch (error) {
-    console.log(error);
-  }
-};
+import { getProducts } from "app/services/shopify";
 
 export const MainProducts = async () => {
   const products = await getProducts();
@@ -38,3 +22,5 @@ export const MainProducts = async () => {
     </section>
   );
 };
+
+// creacion de carpeta services para poner todos los endpoint  y servicios en general que vamos a consumir de manera externa (urls) y otra carpeta llamada config donde estan todas las variables de entorno y en el scprit index.ts van todas las llamdas que estemos realizando
