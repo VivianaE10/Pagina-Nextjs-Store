@@ -1,5 +1,5 @@
 import { ProductsWrapper } from "app/components/Store/ProductsWrapper";
-import { getProducts } from "app/services/shopify";
+import { getProducts } from "app/services/shopify/products";
 
 interface CategoryProps {
   params: {
@@ -13,8 +13,10 @@ interface CategoryProps {
 //Importar y utilizar el componente de categorías
 //Importa el componente ProductsCategory dentro de tu página de Store.
 //Configurar la petición de productos:Haz uso de un async function para obtener productos y pasar estos datos al ProductWrapper.
+
 export default async function Category(props: CategoryProps) {
   const products = await getProducts(); //Configura la función asíncrona para obtener productos usando tu servicio Get Products.
+
   const { categories } = props.params;
 
   // throw new Error("Error: Boom!"); // es para ver el error con la imagen que organizamos
