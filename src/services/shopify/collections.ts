@@ -23,3 +23,19 @@ export const getCollections = async () => {
     console.log(error);
   }
 };
+// voy a traer los productos de las colecciones
+export const getCollectionProducts = async (id: string) => {
+  try {
+    const response = await fetch(shopifyUrls.collections.products(id), {
+      headers: new Headers({
+        "X-Shopify-Access-Token": env.SHOPIFY_TOKEN,
+      }),
+    });
+    const { products } = await response.json();
+    return products;
+  } catch (error) {
+    console.log(error);
+  }
+};
+//los headers son información adicional que se envia junto con tu solicitud HTTP (fetch) para decirle al servidor cómo tratar tu petición.
+//header "Hola Shopify, yo sí tengo permiso para pedir esta información."

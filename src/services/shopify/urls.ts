@@ -8,8 +8,10 @@ export const shopifyUrls = {
 
   collections: {
     all: `${env.SHOPIFY_HOSTNAME}/admin/api/2025-04/smart_collections.json`,
+    products: (id: string) =>
+      `${env.SHOPIFY_HOSTNAME}/admin/api/2025-04/collections/${id}/products.json`,
   },
 };
-
 // urls basadas en que informacion estamos obteniendo del dominio de esa informacion, como obtener informacion de los productos, como productos filtados, oh de una categoria en espevcifico oh todos los productos
 //collections de los productos son las que hice en la pagina de shopify
+//products estoy trayenco la coleccion de los productos
