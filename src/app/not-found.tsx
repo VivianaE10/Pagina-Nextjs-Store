@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import styles from "app/Sass/not-found.module.sass";
 import Link from "next/link";

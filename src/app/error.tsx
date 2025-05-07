@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-
 import styles from "app/Sass/global-error.module.sass";
 
 export default function GlobalError({ reset }: ErrorPageProps) {

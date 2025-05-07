@@ -13,11 +13,6 @@ interface CategoryProps {
   };
 }
 
-//Para que las colecciones que has creado sean efectivas, necesitas hacer que tu tienda las consuma e integre, permitiendo navegar por categorías específicas.
-//Importar y utilizar el componente de categorías
-//Importa el componente ProductsCategory dentro de tu página de Store.
-//Configurar la petición de productos:Haz uso de un async function para obtener productos y pasar estos datos al ProductWrapper.
-
 export default async function Category(props: CategoryProps) {
   const { categories } = props.params;
   let products = [];
@@ -36,6 +31,11 @@ export default async function Category(props: CategoryProps) {
 
   return <ProductsWrapper products={products} />;
 }
+
+//Para que las colecciones que has creado sean efectivas, necesitas hacer que tu tienda las consuma e integre, permitiendo navegar por categorías específicas.
+//Importar y utilizar el componente de categorías
+//Importa el componente ProductsCategory dentro de tu página de Store.
+//Configurar la petición de productos:Haz uso de un async function para obtener productos y pasar estos datos al ProductWrapper.
 
 // throw new Error("Error: Boom!"); // es para ver el error con la imagen que organizamos
 
