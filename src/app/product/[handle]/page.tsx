@@ -14,7 +14,7 @@ export default async function ProductPage({ searchParams }: ProductPageProps) {
   const product = products[0];
 
   if (!id) {
-    redirect("/");
+    redirect("/"); //redireccioando a la pagina principal desde el producto, cuando le eliminamos el id en la url
   }
 
   return <ProductView product={product} />;
