@@ -4,7 +4,7 @@ import { env } from "app/config/env";
 export const shopifyUrls = {
   products: {
     all: `${env.SHOPIFY_HOSTNAME}/admin/api/2025-04/products.json`, //process.env.SHOPIFY_API_KEY: es la variable de entorno que debería contener tu token de acceso
-    mainProducts: `${env.SHOPIFY_HOSTNAME}/admin/api/2023-10/collections/499631620409/products.json`,
+    mainProducts: `${env.SHOPIFY_HOSTNAME}/admin/api/2023-10/collections/499631620409/products.json`, //url shopyfy de las colleciones
   },
 
   collections: {
