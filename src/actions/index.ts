@@ -45,3 +45,14 @@ export const handleCreateUser = async (formData: FormData) => {
     throw error;
   }
 };
+
+// el componente handleCreateUser
+// Convierte el FormData en un objeto JavaScript (formDataObject).
+// Elimina el campo password_confirmation porque no se necesita para crear el usuario.
+// Prepara los datos del usuario (nombre, correo, teléfono, etc.) en un objeto variables para una mutación GraphQL.
+// Envía una solicitud GraphQL usando la mutación createUserMutation para crear un nuevo usuario.
+// Verifica si el usuario fue creado correctamente revisando si customerCreate.customer.firstName existe.
+// Si el usuario fue creado correctamente:
+// Llama a createAccessToken() para generar un token de acceso (probablemente un JWT).
+// Redirige al usuario a la ruta /store.
+// Si hay un error, lo imprime en consola y lo vuelve a lanzar (throw) para que pueda ser manejado externamente.
