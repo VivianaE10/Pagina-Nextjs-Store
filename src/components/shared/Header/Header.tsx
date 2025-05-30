@@ -1,10 +1,10 @@
 import Link from "next/link";
 import styles from "./Header.module.css";
-import { cookies } from "next/headers";
+import { validateAccessToken } from "app/utils/auth/validateAccessToken";
 
-export const Header = () => {
-  const cookiesStore = cookies();
-  const token = cookiesStore.get("accessToken")?.value;
+export const Header = async () => {
+  const customer = await validateAccessToken();
+
   return (
     <header>
       <nav>
@@ -16,12 +16,16 @@ export const Header = () => {
             <Link href="/store">Store</Link>
           </li>
         </ul>
-        {token ? <p>Hola!</p> : <Link href="/login">Login</Link>}
+        {customer?.firstName ? (
+          <p>Hola! {customer.firstName}</p>
+        ) : (
+          <Link href="/login">Login</Link>
+        )}
       </nav>
     </header>
   );
 };
 
-//Si hay token, muestra Hola!
+//Si el usuario esta autenticado (token), muestra Hola! y elnombre del usuario
 // Si NO hay token, muestra <Link href="/login">Login</Link>
 // Así que si tú estás logueado (y el token existe), NO se va a mostrar el link de login. Eso es lo correcto.

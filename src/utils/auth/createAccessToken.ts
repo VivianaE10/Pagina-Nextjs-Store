@@ -29,3 +29,8 @@ export const createAccessToken = async (email: string, password: string) => {
     return accessToken;
   }
 };
+
+//accessToken esta al macenado en una cookie donde se puede utilizar en cualquier parte de ka aplicacion
+//uso traer la informacion del usuario
+//si el accessToken es valido es obetner la imnformacion del usuario con accessToken
+//tengo archivos GRAPHQL porque estoy usando consultas/mutaciones/esquemas GraphQL en tu cliente o servidor.
