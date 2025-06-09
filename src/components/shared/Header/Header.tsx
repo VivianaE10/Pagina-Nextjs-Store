@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styles from "./Header.module.sass";
 import { validateAccessToken } from "app/utils/auth/validateAccessToken";
-import { ShoppingCart } from "app/components/ShoppingCart";
+import { ShoppingCart } from "../ShoppingCart";
 
 export const Header = async () => {
   const customer = await validateAccessToken();
