@@ -3,8 +3,11 @@
 "use server";
 
 import { GraphQLClientSingleton } from "app/graphql";
+import { createCartMutation } from "app/graphql/mutations/createCartMutation";
 import { createUserMutation } from "app/graphql/mutations/createUserMutation";
 import { createAccessToken } from "app/utils/auth/createAccessToken";
+import { validateAccessToken } from "app/utils/auth/validateAccessToken";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export const handleCreateUser = async (formData: FormData) => {
@@ -28,8 +31,6 @@ export const handleCreateUser = async (formData: FormData) => {
       createUserMutation,
       variables
     );
-
-    console.log("Respuesta GraphQL:", customerCreate);
 
     if (customerCreate?.customer?.firstName) {
       await createAccessToken(
@@ -56,6 +57,41 @@ export const handleLogin = async (formData: FormData) => {
     redirect("/store");
   }
 };
+
+export const handleCreateCart = async (items: CartItem[]) => {
+  const cookiesStore = await cookies();
+  const accesToken = cookiesStore.get("accessToken")?.value;
+
+  if (!accesToken) redirect("/login");
+
+  const graphqlClient = GraphQLClientSingleton.getInstance().getClient();
+  const customer = await validateAccessToken();
+  const variables = {
+    input: {
+      buyerIdentity: {
+        //identidad del cliente
+        customerAccessToken: accesToken,
+        email: customer?.email,
+      },
+      lines: items.map((item) => ({
+        merchandiseId: item.merchandiseId, //formatear
+        quantity: item.quantity,
+      })),
+    },
+  };
+  //creacion del carro
+  const {
+    cartCreate,
+  }: {
+    cartCreate?: {
+      cart?: {
+        checkoutUrl: string;
+      };
+    };
+  } = await graphqlClient.request(createCartMutation, variables);
+
+  return cartCreate?.cart?.checkoutUrl;
+};
 // el componente handleCreateUser
 // Convierte el FormData en un objeto JavaScript (formDataObject).
 // Elimina el campo password_confirmation porque no se necesita para crear el usuario.
@@ -66,3 +102,9 @@ export const handleLogin = async (formData: FormData) => {
 // Llama a createAccessToken() para generar un token de acceso (probablemente un JWT).
 // Redirige al usuario a la ruta /store.
 // Si hay un error, lo imprime en consola y lo vuelve a lanzar (throw) para que pueda ser manejado externamente.
+
+// el componente handleCreateCart
+//Verifica si el usuario está autenticado.
+//Prepara la información del carrito.
+//Llama a una mutación GraphQL para crear el carrito.
+//Devuelve la URL de checkout.

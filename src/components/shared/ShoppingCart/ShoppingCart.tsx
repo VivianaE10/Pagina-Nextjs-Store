@@ -1,38 +1,59 @@
 "use client";
-
-import { FaShoppingCart } from "react-icons/fa";
-import styles from "./ShoppingCart.module.sass";
-import { useShoopingCart } from "app/hooks/useShoopingCart";
 import { useState } from "react";
+import { FaShoppingCart } from "react-icons/fa";
+import { useShoppingCart } from "app/hooks/useShoppingCart";
+import { ShoppingCartItem } from "./ShoppingCartItem";
+import { handleCreateCart } from "app/actions";
+import styles from "./ShoppingCart.module.sass";
 
-export const ShoppingCart = () => {
-  const { cart } = useShoopingCart(); //Usa el hook global de Zustand (useShoopingCart) para acceder al carrito de compras (cart), que es un array de ítems.
-  const [isOpen, setIsOpen] = useState(false); //Crea un estado local llamado isOpen (booleano) para controlar si se muestra o no el contenido del carrito al hacer clic.
+export default function ShoppingCart() {
+  const { cart } = useShoppingCart();
+  const [isBuying, setIsBuying] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const hasItems = cart.length > 0;
 
-  const handleOpen = () => setIsOpen(!isOpen); //Define una función que invierte el valor de isOpen cada vez que se ejecuta (mostrar/ocultar el carrito).
+  const handleOpen = () => {
+    if (hasItems) {
+      setIsOpen(!isOpen);
+    }
+  };
+
+  const handleBuy = async () => {
+    try {
+      setIsBuying(true);
+      const checkoutUrl = await handleCreateCart(cart);
+      if (!checkoutUrl) throw new Error("Error creating checkout");
+      window.localStorage.removeItem("cart");
+      window.location.href = checkoutUrl; //checkoutUrl para redirigir al usuario al proceso de pago.
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsBuying(false);
+    }
+  };
 
   return (
-    <>
-      <button className={styles.ShoppingCart} onClick={handleOpen}>
+    <div className={styles.ShoppingCart}>
+      {hasItems && (
         <span className={styles.ShoppingCart__counter}>{cart.length}</span>
+      )}
+      <button className={styles.ShoppingCart__cart} onClick={handleOpen}>
         <FaShoppingCart />
       </button>
-      {isOpen && (
+      {isOpen && hasItems && (
         <div className={styles.ShoppingCart__items}>
-          {cart.map((item, index) => (
-            <div key={`${item?.id}-${index}`}>
-              <p>{item?.title}</p>
-              <p>Cantidad: {item.quantity}</p>
-            </div>
+          {cart.map((item) => (
+            <ShoppingCartItem key={item.id} item={item} />
           ))}
           <button
-            onClick={handleOpen}
+            onClick={handleBuy}
             className={styles.ShoppingCart__buyButton}
+            disabled={isBuying}
           >
             Buy
           </button>
         </div>
       )}
-    </>
+    </div>
   );
-};
+}

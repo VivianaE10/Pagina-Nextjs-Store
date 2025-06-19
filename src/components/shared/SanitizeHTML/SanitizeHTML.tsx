@@ -1,5 +1,5 @@
 //componente de sanitizacion, proceso de sanitizacion si nos llegan etiquetas string oh alguna otra etiqueta que no queramos y lo remueve del string
-
+"use client";
 import { createElement, HTMLAttributes } from "react";
 import sanitize from "sanitize-html";
 

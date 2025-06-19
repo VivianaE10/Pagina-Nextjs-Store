@@ -2,7 +2,7 @@
 import { SyntheticEvent, useState } from "react";
 import styles from "./ProductViewItemsOrder.module.sass";
 import { FaCartShopping } from "react-icons/fa6";
-import { useShoopingCart } from "app/hooks/useShoopingCart";
+import { useShoppingCart } from "app/hooks/useShoppingCart";
 
 interface ProductViewItemsOrderProps {
   maxQuantity: number;
@@ -14,15 +14,18 @@ export const ProductViewItemsOrder = ({
   product,
 }: ProductViewItemsOrderProps) => {
   const [counter, setCounter] = useState(1);
-  const { addToCart } = useShoopingCart();
+  const { addToCart } = useShoppingCart();
 
   const handleAddToCart = (event: SyntheticEvent) => {
-    event.preventDefault();
+    event.preventDefault(); //Evita que el formulario (o el botón que llamó esta función) recargue la página.
     addToCart({
+      //Llama a la función global que tienes en tu hook useShoppingCart, para agregar un producto al carrito.
+      id: product.id,
       title: product.title,
       price: product.price,
       quantity: counter,
-      id: product.id,
+      image: product.image,
+      merchandiseId: product.gql_id, //	Clave para Shopify. Es el ID único de una variante (no del producto general)
     });
   };
 
@@ -65,3 +68,8 @@ export const ProductViewItemsOrder = ({
     </div>
   );
 };
+
+//El merchandiseId es el identificador único de una variante, no del producto general.pasar merchandiseId con el valor de gql_id, que asumes que es el ID GraphQL de la variante del producto
+//Validaste que gql_id (el merchandiseId) estuviera definido antes de agregarlo al carrito.
+//gql_id	ID de variante (ProductVariant)	Lo usas para identificar la variante con GraphQL----Lo extraes de Shopify
+//merchandiseId	ID requerido en cartCreate	Es el valor que Shopify necesita en la mutación-----Se lo das a Shopify

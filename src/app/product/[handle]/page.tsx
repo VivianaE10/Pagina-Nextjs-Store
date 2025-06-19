@@ -12,6 +12,7 @@ interface ProductPageProps {
 
 export async function generateMetadata({ searchParams }: ProductPageProps) {
   const id = searchParams.id;
+
   const products = await getProducts(id);
   const product = products[0];
 
@@ -28,12 +29,17 @@ export async function generateMetadata({ searchParams }: ProductPageProps) {
 
 export default async function ProductPage({ searchParams }: ProductPageProps) {
   const id = searchParams.id;
+  if (!id) redirect("/");
+
   const products = await getProducts(id);
   const product = products[0];
 
-  if (!id) {
-    redirect("/"); //redireccioando a la pagina principal desde el producto, cuando le eliminamos el id en la url
-  }
+  const variantId = product.variants?.edges?.[0]?.node?.id;
 
-  return <ProductView product={product} />;
+  const productWithVariant = {
+    ...product,
+    merchandiseId: variantId,
+  };
+
+  return <ProductView product={productWithVariant} />;
 }
