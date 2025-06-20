@@ -1,4 +1,3 @@
-"use server";
 import { GraphQLClientSingleton } from "app/graphql";
 import { customerAccessTokenCreateMutation } from "app/graphql/mutations/customerAccessTokenCreate";
 import { cookies } from "next/headers";

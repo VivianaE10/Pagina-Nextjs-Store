@@ -58,6 +58,7 @@ export const handleLogin = async (formData: FormData) => {
   }
 };
 
+// genera el carrito en Shopify.
 export const handleCreateCart = async (items: CartItem[]) => {
   const cookiesStore = await cookies();
   const accesToken = cookiesStore.get("accessToken")?.value;

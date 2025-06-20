@@ -18,13 +18,14 @@ export default function ShoppingCart() {
     }
   };
 
+  // lógica para limpiar el carrito tras una compra exitosa.
   const handleBuy = async () => {
     try {
-      setIsBuying(true);
-      const checkoutUrl = await handleCreateCart(cart);
+      setIsBuying(true); //// Indicador visual de que se está procesando la compra
+      const checkoutUrl = await handleCreateCart(cart); // // Crea el carrito en Shopify y obtiene la URL de pago
       if (!checkoutUrl) throw new Error("Error creating checkout");
-      window.localStorage.removeItem("cart");
-      window.location.href = checkoutUrl; //checkoutUrl para redirigir al usuario al proceso de pago.
+      window.localStorage.removeItem("cart"); //Elimina completamente el carrito que estaba almacenado en localStorage bajo la clave "shopping-cart"
+      window.location.href = checkoutUrl; //checkout es la Url generada por shopify para redirigir al usuario al proceso de pago.
     } catch (error) {
       console.log(error);
     } finally {

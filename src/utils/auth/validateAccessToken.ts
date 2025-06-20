@@ -1,4 +1,3 @@
-"use server";
 //Validación de Access Tokens  con GraphQL y Cookies
 import { GraphQLClientSingleton } from "app/graphql";
 import { customerName } from "app/graphql/queris/customerName";
