@@ -1,6 +1,6 @@
 //Validación de Access Tokens  con GraphQL y Cookies
 import { GraphQLClientSingleton } from "app/graphql";
-import { customerName } from "app/graphql/queris/customerName";
+import { customerName } from "app/graphql/queries/customerName";
 import { cookies } from "next/headers";
 
 export const validateAccessToken = async () => {
