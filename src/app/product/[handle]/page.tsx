@@ -37,19 +37,3 @@ export default async function ProductPage({ searchParams }: ProductPageProps) {
 
   return <ProductView product={product} />;
 }
-// export default async function ProductPage({ searchParams }: ProductPageProps) {
-//   const id = searchParams.id;
-//   if (!id) redirect("/");
-
-//   const products = await getProducts(id);
-//   const product = products[0];
-
-//   const variantId = product.variants?.edges?.[0]?.node?.id;
-
-//   const productWithVariant = {
-//     ...product,
-//     merchandiseId: variantId,
-//   };
-
-//   return <ProductView product={productWithVariant} />;
-// }
