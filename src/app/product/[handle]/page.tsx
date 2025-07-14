@@ -8,8 +8,6 @@ interface ProductPageProps {
   };
 }
 
-//metadato dinamico y open graph para el seo
-
 export async function generateMetadata({ searchParams }: ProductPageProps) {
   const id = searchParams.id;
   const products = await getProducts(id);
@@ -20,7 +18,6 @@ export async function generateMetadata({ searchParams }: ProductPageProps) {
     description: product.description,
     keywords: product.tags,
     openGraph: {
-      //Open Graph mejora la apariencia de tu sitio cuando se comparte
       images: [product.image],
     },
   };
