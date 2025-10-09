@@ -2,6 +2,8 @@ import { getCollections } from "app/services/shopify/collections";
 import Link from "next/link";
 import styles from "./StoreLayout.module.sass";
 
+export const dynamic = "force-dynamic"; // Esto indica que el layout es dinámico
+
 export default async function Layout({
   children,
 }: {
