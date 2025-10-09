@@ -3,13 +3,13 @@ import { getProducts } from "app/services/shopify/products";
 import { redirect } from "next/navigation";
 
 interface ProductPageProps {
-  searchParams: {
-    id: string;
-  };
+  searchParams?: any;
 }
 
 export async function generateMetadata({ searchParams }: ProductPageProps) {
-  const id = searchParams.id;
+  const params = await searchParams; // 🔹 se espera la promesa
+  const id = params?.id;
+
   const products = await getProducts(id);
   const product = products[0];
 
@@ -24,7 +24,9 @@ export async function generateMetadata({ searchParams }: ProductPageProps) {
 }
 
 export default async function ProductPage({ searchParams }: ProductPageProps) {
-  const id = searchParams.id;
+  const params = await searchParams; // 🔹 se espera la promesa
+  const id = params?.id;
+
   const products = await getProducts(id);
   const product = products[0];
 

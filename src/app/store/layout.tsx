@@ -1,7 +1,6 @@
 import { getCollections } from "app/services/shopify/collections";
 import Link from "next/link";
 import styles from "./StoreLayout.module.sass";
-import { ChatLink } from "app/components/Store/ChatLink";
 
 export default async function Layout({
   children,
@@ -15,7 +14,7 @@ export default async function Layout({
       <h1>Explore</h1>
       <nav>
         <ul className={styles.StoreLayout__list}>
-          {collections.map((collection) => (
+          {collections.map((collection: any) => (
             //navegación dinámicos para listas de categorías
             <Link
               key={collection.id}
@@ -26,7 +25,6 @@ export default async function Layout({
             </Link>
           ))}
         </ul>
-        <ChatLink />
       </nav>
       {children}
     </main>

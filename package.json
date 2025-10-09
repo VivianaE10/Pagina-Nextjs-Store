@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "ai": "^3.4.33",
     "classnames": "^2.5.1",
     "graphql": "^16.11.0",
     "graphql-request": "^7.1.2",

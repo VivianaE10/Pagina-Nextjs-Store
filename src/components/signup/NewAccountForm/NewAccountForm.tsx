@@ -7,9 +7,10 @@ export const NewAccountForm = () => {
   const [errors, setErrors] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
+    const form = event.currentTarget; // ahora TypeScript sabe que es HTMLFormElement
+    const formData = new FormData(form);
     await handleCreateUser(formData);
   };
 

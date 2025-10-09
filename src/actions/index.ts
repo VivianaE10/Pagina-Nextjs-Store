@@ -10,6 +10,11 @@ import { validateAccessToken } from "app/utils/auth/validateAccessToken";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
+interface CartItem {
+  merchandiseId: string;
+  quantity: number;
+}
+// Maneja la creación de usuario en Shopify y genera token de acceso
 export const handleCreateUser = async (formData: FormData) => {
   try {
     const formDataObject = Object.fromEntries(formData);
@@ -27,10 +32,10 @@ export const handleCreateUser = async (formData: FormData) => {
       },
     };
 
-    const { customerCreate } = await graphqlClient.request(
+    const { customerCreate } = (await graphqlClient.request(
       createUserMutation,
       variables
-    );
+    )) as any;
 
     if (customerCreate?.customer?.firstName) {
       await createAccessToken(
@@ -89,7 +94,7 @@ export const handleCreateCart = async (items: CartItem[]) => {
         checkoutUrl: string;
       };
     };
-  } = await graphqlClient.request(createCartMutation, variables);
+  } = (await graphqlClient.request(createCartMutation, variables)) as any;
 
   return cartCreate?.cart?.checkoutUrl;
 };

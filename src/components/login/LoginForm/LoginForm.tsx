@@ -2,11 +2,10 @@
 
 import { handleLogin } from "app/actions";
 import styles from "./LoginForm.module.sass";
-
 export const LoginForm = () => {
-  const handleSubmit = async (event) => {
-    const formData = new FormData(event.target);
-    event.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // primero se previene el comportamiento por defecto
+    const formData = new FormData(event.currentTarget);
     await handleLogin(formData);
   };
 

@@ -8,8 +8,8 @@ export const config = {
 };
 
 // esta funcion interpreta las peticiones.
-export function middleware(request: NextRequest) {
-  const cookiesStore = cookies(); // Obtiene el objeto cookiesStore, que permite leer cookies desde el request.
+export async function middleware(request: NextRequest) {
+  const cookiesStore = await cookies(); // Obtiene el objeto cookiesStore, que permite leer cookies desde el request.
   const accessToken = cookiesStore.get("accessToken")?.value; //Lee la cookie llamada "accessToken", y extrae su valor.
   if (accessToken) {
     //Verifica si la cookie accessToken existe (es decir, si el usuario ya está logueado).
