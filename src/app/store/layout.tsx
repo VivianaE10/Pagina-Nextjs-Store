@@ -1,22 +1,29 @@
+
 import { getCollections } from "app/services/shopify/collections";
 import Link from "next/link";
 import styles from "./StoreLayout.module.sass";
 
 export const dynamic = "force-dynamic"; // Esto indica que el layout es dinámico
 
+interface Collection {
+  id: string;
+  handle: string;
+  title: string;
+}
+
 export default async function Layout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const collections = await getCollections();
+  const collections: Collection[] = await getCollections();
 
   return (
     <main className={styles.StoreLayout}>
       <h1>Explore</h1>
       <nav>
         <ul className={styles.StoreLayout__list}>
-          {collections.map((collection: any) => (
+          {collections.map((collection) => (
             //navegación dinámicos para listas de categorías
             <Link
               key={collection.id}
